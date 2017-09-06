@@ -1,0 +1,47 @@
+{
+    "name": "codestyle",
+    "displayName": "codestyle",
+    "description": "Format your code using Clang and another features",
+    "version": "0.0.1",
+    "publisher": "felipeKimio",
+    "engines": {
+        "vscode": "^1.15.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.config",
+        "onCommand:extension.format"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.config",
+                "title": "Code Style: Config"
+            },
+            {
+                "command": "extension.format",
+                "title": "Code Style: Format Current File"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5",
+        "mocha": "^3.5.0",
+        "@types/node": "^8.0.26",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "node-cmd": "^3.0.0"
+    }
+}
