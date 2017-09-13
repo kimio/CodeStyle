@@ -12,7 +12,8 @@
     ],
     "activationEvents": [
         "onCommand:extension.config",
-        "onCommand:extension.format"
+        "onCommand:extension.format",
+        "onCommand:extension.code_review_objc"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -24,6 +25,10 @@
             {
                 "command": "extension.format",
                 "title": "Code Style: Format Current File"
+            },
+            {
+                "command": "extension.code_review_objc",
+                "title": "Code Style: Code Review Objective-c"
             }
         ]
     },
@@ -42,6 +47,7 @@
         "@types/mocha": "^2.2.42"
     },
     "dependencies": {
+        "fs": "0.0.1-security",
         "node-cmd": "^3.0.0"
     }
 }

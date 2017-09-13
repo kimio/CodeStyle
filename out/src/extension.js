@@ -31,6 +31,13 @@ function activate(context) {
         }
     });
     context.subscriptions.push(disposable);
+    disposable = vscode.commands.registerCommand('extension.code_review_objc', () => {
+        if (workspaceAdresss) {
+            var clang = new Clang_1.Clang(workspace);
+            clang.codeReview();
+        }
+    });
+    context.subscriptions.push(disposable);
 }
 exports.activate = activate;
 function deactivate() {

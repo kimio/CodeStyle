@@ -1,6 +1,6 @@
 'use strict';
 export class Workspace {
-  private static readonly errorWorkspaceFile =  'Your file doesn\'t has workspace';
+  private static readonly errorWorkspaceFile = 'Your file doesn\'t has workspace';
   public vscode = null;
   public workspacePath = null;
   public constructor(vscode){
