@@ -1,13 +1,6 @@
 'use strict';
-import { ClangLanguageRules } from "../Clang";
-
-export class ObjC implements ClangLanguageRules {
-    maxLinesInFunction: number;
-    maxFunctionInClass: number;
-    maxConditionsInFunctions: number;
-    stringContentFile: string;
-    functionsInClass: any;
-
+Object.defineProperty(exports, "__esModule", { value: true });
+class ObjC {
     groupBy(list, keyGetter) {
         const map = new Map();
         list.forEach((item) => {
@@ -15,15 +8,16 @@ export class ObjC implements ClangLanguageRules {
             const collection = map.get(key);
             if (!collection) {
                 map.set(key, [item]);
-            } else {
+            }
+            else {
                 collection.push(item);
             }
         });
         return map;
     }
-    whereIsTheClassOfFunction(functionContent: string): string {
+    whereIsTheClassOfFunction(functionContent) {
         let classesImplementation = this.stringContentFile.match(/@implementation.*/gm);
-        let functionPosition: number = this.stringContentFile.indexOf(functionContent);
+        let functionPosition = this.stringContentFile.indexOf(functionContent);
         let implementationClass = "";
         classesImplementation.forEach(className => {
             if (this.stringContentFile.indexOf(className, functionPosition) == -1) {
@@ -32,11 +26,9 @@ export class ObjC implements ClangLanguageRules {
         });
         return implementationClass;
     }
-
-    findFunctionsInClass(): void {
+    findFunctionsInClass() {
         let functionsNameInObject = this.stringContentFile.match(/[\+\-]\s*\(.*\).*/gm);
         let functionContentInObject = this.stringContentFile.match(/\{(\s*?.*?)*?^\}/gm);
-
         this.functionsInClass = [];
         var i = 0;
         functionContentInObject.forEach(functionContent => {
@@ -44,12 +36,11 @@ export class ObjC implements ClangLanguageRules {
                 name: functionsNameInObject[i],
                 content: functionContent,
                 class: this.whereIsTheClassOfFunction(functionContent)
-            }
+            };
             i++;
         });
     }
-
-    isConditionsInFunctionsMoreThanLimit(): any {
+    isConditionsInFunctionsMoreThanLimit() {
         let functionClasses = [];
         let lines = this.maxLinesInFunction;
         this.functionsInClass.forEach(functionClass => {
@@ -57,18 +48,17 @@ export class ObjC implements ClangLanguageRules {
             if (conditions) {
                 if (conditions.length > lines) {
                     functionClasses.push({
-                        class:functionClass.class,
-                        content:functionClass.content,
-                        lengthCondition:conditions.length,
-                        plusCondition:(conditions.length - lines)
+                        class: functionClass.class,
+                        content: functionClass.content,
+                        lengthCondition: conditions.length,
+                        plusCondition: (conditions.length - lines)
                     });
                 }
             }
         });
         return functionClasses;
     }
-
-    isFunctioLinesMoreThanLimit(): any {
+    isFunctioLinesMoreThanLimit() {
         let functionClasses = [];
         let lines = this.maxLinesInFunction;
         this.functionsInClass.forEach(functionClass => {
@@ -78,8 +68,7 @@ export class ObjC implements ClangLanguageRules {
         });
         return functionClasses;
     }
-
-    isFunctionClassMoreThanLimit(): any {
+    isFunctionClassMoreThanLimit() {
         let classesGrouped = this.groupBy(this.functionsInClass, functionClass => functionClass.class);
         let functionClasses = [];
         let lines = this.maxFunctionInClass;
@@ -90,5 +79,6 @@ export class ObjC implements ClangLanguageRules {
         });
         return functionClasses;
     }
-
 }
+exports.ObjC = ObjC;
+//# sourceMappingURL=ObjC.js.map

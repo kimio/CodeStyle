@@ -1,6 +1,7 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 const Terminal_1 = require("../Helpers/Terminal");
+const ObjC_1 = require("./CodeReview/ObjC");
 var fs = require('fs');
 class Clang {
     constructor(workspace) {
@@ -9,15 +10,51 @@ class Clang {
         this.clangFormatFile = "/.clang-format";
         this.workspace = workspace;
     }
-    newConfig(workspaceAdresss, callback) {
-        Terminal_1.Terminal.command("clang-format -style=llvm -dump-config > " + workspaceAdresss + this.clangFormatFile, (err, data, stderr) => {
-            callback(err, workspaceAdresss + this.clangFormatFile);
+    /**
+     * Create new clang config file
+     * @param workspaceAdresss
+     * @param Callback
+     */
+    newConfig(workspaceAdresss, Callback) {
+        var clangFile = workspaceAdresss + this.clangFormatFile;
+        Terminal_1.Terminal.command("clang-format -style=llvm -dump-config > " + clangFile, (err, data, stderr) => {
+            Terminal_1.Terminal.command("echo '\n\nCode Review Config\n\n\nmaxLinesInFunction: \nmaxFunctionInClass:\nmaxConditionsInFunctions:' >> " + clangFile, (err, data, stderr) => {
+                Callback(err, clangFile);
+            });
         });
     }
+    /**
+     * Code Review based on clang format file
+     */
     codeReview() {
         let keyAndValueClanfFormat = this.getClangFormatFile();
         if (keyAndValueClanfFormat) {
+            let languageRule = null;
+            switch (keyAndValueClanfFormat.Language) {
+                case "ObjC":
+                    languageRule = new ObjC_1.ObjC();
+                    break;
+            }
+            if (languageRule) {
+                languageRule = this.setupCodeReviewVars(languageRule, keyAndValueClanfFormat);
+                languageRule.stringContentFile = fs.readFileSync(this.workspace.getCurrentFile()).toString();
+                languageRule.findFunctionsInClass();
+                this.doReport({
+                    functionLineMoreThanLimit: languageRule.isFunctioLinesMoreThanLimit(),
+                    functionClassMoreThanLimit: languageRule.isFunctionClassMoreThanLimit(),
+                    conditionFunctionClassMoreThanLimit: languageRule.isConditionsInFunctionsMoreThanLimit()
+                });
+            }
         }
+    }
+    setupCodeReviewVars(languageRule, keyAndValueClanfFormat) {
+        languageRule.maxLinesInFunction = parseInt(keyAndValueClanfFormat.maxLinesInFunction.toString());
+        languageRule.maxFunctionInClass = parseInt(keyAndValueClanfFormat.maxFunctionInClass.toString());
+        languageRule.maxConditionsInFunctions = parseInt(keyAndValueClanfFormat.maxConditionsInFunctions.toString());
+        return languageRule;
+    }
+    doReport(codeReviewData) {
+        console.log(codeReviewData);
     }
     getClangFormatFile() {
         let workspaceAdresss = this.workspace.verify();

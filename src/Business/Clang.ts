@@ -1,39 +1,81 @@
 'use strict';
 import { Terminal } from '../Helpers/Terminal';
 import { Workspace } from "../Helpers/Workspace";
+import { ObjC } from "./CodeReview/ObjC";
 var fs = require('fs');
 interface Callback {
     (error: Error, result: object): void;
 }
 export interface ClangLanguageRules {
-    maxIfsInFunctions:10;
-    maxLinesInFunction:35;
-    usingOnlyStringConstInFunction:true;
-    maxFunctionInClass:30;
+    stringContentFile: string;
+    functionsInClass: any;
+    maxLinesInFunction: number;
+    maxFunctionInClass: number;
+    maxConditionsInFunctions: number;
 
-    maxQuantityOfIfsInFunctions();
-    maxQuantityOfLinesInFunction();
-    showReportWhenNotUsingStringConst();
-    maxQuantityOfFunctionInClass();
+    findFunctionsInClass(): void;
+    whereIsTheClassOfFunction(functionContent: string): string;
+    isConditionsInFunctionsMoreThanLimit(): any;
+    isFunctioLinesMoreThanLimit(): any;
+    isFunctionClassMoreThanLimit(): any;
 }
 export class Clang {
     private workspace = null;
     private fileConfig = null;
     private readonly clangFormatFile = "/.clang-format";
+
     public constructor(workspace: Workspace) {
         this.workspace = workspace;
     }
+    /**
+     * Create new clang config file
+     * @param workspaceAdresss 
+     * @param Callback 
+     */
     public newConfig(workspaceAdresss: string, Callback) {
-        Terminal.command("clang-format -style=llvm -dump-config > " + workspaceAdresss + this.clangFormatFile, (err, data, stderr) => {
-            Callback(err, workspaceAdresss + this.clangFormatFile);
+        var clangFile = workspaceAdresss + this.clangFormatFile;
+        Terminal.command("clang-format -style=llvm -dump-config > " + clangFile, (err, data, stderr) => {
+            Terminal.command("echo '\n\nCode Review Config\n\n\nmaxLinesInFunction: \nmaxFunctionInClass:\nmaxConditionsInFunctions:' >> "+clangFile, (err, data, stderr) => {
+                Callback(err, clangFile);
+            });
         });
     }
+
+    /**
+     * Code Review based on clang format file
+     */
     public codeReview(): void {
         let keyAndValueClanfFormat = this.getClangFormatFile();
         if (keyAndValueClanfFormat) {
-
+            let languageRule: any = null;
+            switch (keyAndValueClanfFormat.Language) {
+                case "ObjC":
+                    languageRule = new ObjC();
+                    break;
+            }
+            if (languageRule) {
+                languageRule = this.setupCodeReviewVars(languageRule,keyAndValueClanfFormat);
+                languageRule.stringContentFile = fs.readFileSync(this.workspace.getCurrentFile()).toString();
+                languageRule.findFunctionsInClass();
+                this.doReport({
+                    functionLineMoreThanLimit:languageRule.isFunctioLinesMoreThanLimit(),
+                    functionClassMoreThanLimit:languageRule.isFunctionClassMoreThanLimit(),
+                    conditionFunctionClassMoreThanLimit:languageRule.isConditionsInFunctionsMoreThanLimit()
+                });
+            }
         }
     }
+    private setupCodeReviewVars(languageRule:any,keyAndValueClanfFormat:any):any{
+        languageRule.maxLinesInFunction = parseInt(keyAndValueClanfFormat.maxLinesInFunction.toString());
+        languageRule.maxFunctionInClass = parseInt(keyAndValueClanfFormat.maxFunctionInClass.toString());
+        languageRule.maxConditionsInFunctions = parseInt(keyAndValueClanfFormat.maxConditionsInFunctions.toString());
+        return languageRule;
+    }
+
+    private doReport(codeReviewData:any): void {
+        console.log(codeReviewData);
+    }
+
     private getClangFormatFile(): any {
         let workspaceAdresss = this.workspace.verify();
         if (workspaceAdresss) {
@@ -56,6 +98,7 @@ export class Clang {
         this.workspace.showError("Workspace not found");
         return false;
     }
+
     public formatFile(fileAdress, callback) {
         if (!fileAdress) {
             fileAdress = this.workspace.getCurrentFile();
@@ -71,6 +114,7 @@ export class Clang {
             callback(err, data);
         });
     }
+
     private clangFormat(callback) {
         var workspace = this.workspace;
         Terminal.command("brew list clang-format", (err, data, stderr) => {
