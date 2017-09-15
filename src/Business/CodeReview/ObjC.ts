@@ -57,6 +57,7 @@ export class ObjC implements ClangLanguageRules {
             if (conditions) {
                 if (conditions.length > lines) {
                     functionClasses.push({
+                        functionName:functionClass.name,
                         class:functionClass.class,
                         content:functionClass.content,
                         lengthCondition:conditions.length,
@@ -72,8 +73,14 @@ export class ObjC implements ClangLanguageRules {
         let functionClasses = [];
         let lines = this.maxLinesInFunction;
         this.functionsInClass.forEach(functionClass => {
-            if ((functionClass.content.split('\n').length - 2) > lines) {
-                functionClasses.push(functionClass);
+            let currentContentLines = functionClass.content.split('\n').length - 2;
+            if (currentContentLines > lines) {
+                functionClasses.push({
+                    functionName:functionClass.name,
+                    class:functionClass.class,
+                    content:functionClass.content,
+                    plusLine:(currentContentLines - lines)
+                });
             }
         });
         return functionClasses;
@@ -85,7 +92,12 @@ export class ObjC implements ClangLanguageRules {
         let lines = this.maxFunctionInClass;
         classesGrouped.forEach(functionClass => {
             if (functionClass.length > lines) {
-                functionClasses.push(functionClass);
+                functionClasses.push({
+                    functionName:functionClass.name,
+                    class:functionClass.class,
+                    content:functionClass.content,
+                    plusFunction:(functionClass.length - lines)
+                });
             }
         });
         return functionClasses;

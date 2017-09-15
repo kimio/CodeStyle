@@ -1,7 +1,8 @@
-# codestyle README
+# README
 
 Hello, some times code review is not much cool :( especially when takes a long time or your IDE not help.
 Then, What I do? Cry? nop..
+
 This Extension help us to create a simple code review and code style, but how? Take a look.
 
 - Clang Format

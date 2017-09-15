@@ -15,6 +15,9 @@ class Workspace {
         this.workspacePath = this.vscode.workspace.workspaceFolders[0].uri.path;
         return this.workspacePath;
     }
+    openUrl(url) {
+        this.vscode.commands.executeCommand('vscode.open', this.vscode.Uri.parse(url));
+    }
     getCurrentFile() {
         return this.vscode.window.activeTextEditor.document.fileName;
     }

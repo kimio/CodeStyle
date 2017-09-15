@@ -18,7 +18,7 @@ class Clang {
     newConfig(workspaceAdresss, Callback) {
         var clangFile = workspaceAdresss + this.clangFormatFile;
         Terminal_1.Terminal.command("clang-format -style=llvm -dump-config > " + clangFile, (err, data, stderr) => {
-            Terminal_1.Terminal.command("echo '\n\nCode Review Config\n\n\nmaxLinesInFunction: \nmaxFunctionInClass:\nmaxConditionsInFunctions:' >> " + clangFile, (err, data, stderr) => {
+            Terminal_1.Terminal.command("echo '\n\n\n#maxLinesInFunction: \n#maxFunctionInClass:\n#maxConditionsInFunctions:' >> " + clangFile, (err, data, stderr) => {
                 Callback(err, clangFile);
             });
         });
@@ -45,6 +45,9 @@ class Clang {
                     conditionFunctionClassMoreThanLimit: languageRule.isConditionsInFunctionsMoreThanLimit()
                 });
             }
+            else {
+                this.workspace.showError("Language not found :( - Please open the .clang-format and set Language ");
+            }
         }
     }
     setupCodeReviewVars(languageRule, keyAndValueClanfFormat) {
@@ -55,6 +58,8 @@ class Clang {
     }
     doReport(codeReviewData) {
         console.log(codeReviewData);
+        this.workspace.showMessage("Openning report...");
+        this.workspace.openUrl("http://www.pinkbike.com/news/fail-of-the-month-june-2016.html");
     }
     getClangFormatFile() {
         let workspaceAdresss = this.workspace.verify();
@@ -67,7 +72,7 @@ class Clang {
                 arrayClangFormat.forEach(element => {
                     let keyAndValue = element.split(':');
                     if (keyAndValue[1]) {
-                        keyAndValueClanfFormat[keyAndValue[0].trim()] = keyAndValue[1].trim();
+                        keyAndValueClanfFormat[keyAndValue[0].trim().replace("#", "")] = keyAndValue[1].trim();
                     }
                 });
                 return keyAndValueClanfFormat;

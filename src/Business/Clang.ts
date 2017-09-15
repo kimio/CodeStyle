@@ -4,7 +4,7 @@ import { Workspace } from "../Helpers/Workspace";
 import { ObjC } from "./CodeReview/ObjC";
 var fs = require('fs');
 interface Callback {
-    (error: Error, result: object): void;
+  (error: Error, result: object): void;
 }
 export interface ClangLanguageRules {
     stringContentFile: string;
@@ -35,7 +35,7 @@ export class Clang {
     public newConfig(workspaceAdresss: string, Callback) {
         var clangFile = workspaceAdresss + this.clangFormatFile;
         Terminal.command("clang-format -style=llvm -dump-config > " + clangFile, (err, data, stderr) => {
-            Terminal.command("echo '\n\nCode Review Config\n\n\nmaxLinesInFunction: \nmaxFunctionInClass:\nmaxConditionsInFunctions:' >> "+clangFile, (err, data, stderr) => {
+            Terminal.command("echo '\n\n\n#maxLinesInFunction: \n#maxFunctionInClass:\n#maxConditionsInFunctions:' >> "+clangFile, (err, data, stderr) => {
                 Callback(err, clangFile);
             });
         });
@@ -62,6 +62,8 @@ export class Clang {
                     functionClassMoreThanLimit:languageRule.isFunctionClassMoreThanLimit(),
                     conditionFunctionClassMoreThanLimit:languageRule.isConditionsInFunctionsMoreThanLimit()
                 });
+            } else {
+                this.workspace.showError("Language not found :( - Please open the .clang-format and set Language ");
             }
         }
     }
@@ -74,6 +76,7 @@ export class Clang {
 
     private doReport(codeReviewData:any): void {
         console.log(codeReviewData);
+        this.workspace.showMessage("Openning report...");
     }
 
     private getClangFormatFile(): any {
@@ -87,7 +90,7 @@ export class Clang {
                 arrayClangFormat.forEach(element => {
                     let keyAndValue = element.split(':');
                     if (keyAndValue[1]) {
-                        keyAndValueClanfFormat[keyAndValue[0].trim()] = keyAndValue[1].trim();
+                        keyAndValueClanfFormat[keyAndValue[0].trim().replace("#","")] = keyAndValue[1].trim();
                     }
                 });
                 return keyAndValueClanfFormat;
