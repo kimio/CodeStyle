@@ -1,65 +1,37 @@
 # codestyle README
 
-This is the README for your extension "codestyle". After writing up a brief description, we recommend including the following sections.
+Hello, some times code review is not much cool :( especially when takes a long time or your IDE not help.
+Then, What I do? Cry? nop..
+This Extension help us to create a simple code review and code style, but how? Take a look.
+
+- Clang Format
+Clang is a compiler front end for the programming languages C, C++, Objective-C, Objective-C++, OpenMP,[5] OpenCL, and CUDA. It uses LLVM as its back end and has been part of the LLVM release cycle since LLVM 2.6.
+
+It is designed to be able to replace the full GNU Compiler Collection (GCC). Its contributors include Apple, Microsoft, Google, ARM, Sony, Intel and Advanced Micro Devices (AMD). It is open-source software,[6] with source code released under the University of Illinois/NCSA License, a permissive free software licence.
+
+The Clang project includes the Clang front end and the Clang static analyzer and several code analysis tools
+[Wikipedia](https://en.wikipedia.org/wiki/Clang)
+
+Test my Clang Format configuration http://cf.monofraps.net
+
 
 ## Features
+Clang Format
+- Install Clang Format on Mac
+- Format Source File
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Code Review
+- Check how many lines in function
+- Check how many function in class
+- Check limit os conditions in function
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1 - Install Visual Studio Code \o\
 
-## Extension Settings
+2 - Check if you have code command on Mac [Microsoft Visual Code](https://code.visualstudio.com/docs/setup/mac)
+- Launch VS Code.
+- Open the Command Palette (⇧⌘P) and type 'shell command' to find the Shell Command: Install 'code' command in PATH command.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
 
 -----------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
