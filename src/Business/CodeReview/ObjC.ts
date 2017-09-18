@@ -93,9 +93,7 @@ export class ObjC implements ClangLanguageRules {
         classesGrouped.forEach(functionClass => {
             if (functionClass.length > lines) {
                 functionClasses.push({
-                    functionName:functionClass.name,
-                    class:functionClass.class,
-                    content:functionClass.content,
+                    class:functionClass[0].class,
                     plusFunction:(functionClass.length - lines)
                 });
             }

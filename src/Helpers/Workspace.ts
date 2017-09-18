@@ -15,6 +15,9 @@ export class Workspace {
     this.workspacePath = this.vscode.workspace.workspaceFolders[0].uri.path;
     return this.workspacePath;
   }
+  public getExtensionPath(publisherName:string):string{
+    return this.vscode.extensions.getExtension(publisherName).extensionPath;
+  }
   public openUrl(url:string):void{
     this.vscode.commands.executeCommand('vscode.open', this.vscode.Uri.parse(url));
   }

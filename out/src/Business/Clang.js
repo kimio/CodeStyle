@@ -8,6 +8,7 @@ class Clang {
         this.workspace = null;
         this.fileConfig = null;
         this.clangFormatFile = "/.clang-format";
+        this.reportHtml = "/report";
         this.workspace = workspace;
     }
     /**
@@ -57,9 +58,12 @@ class Clang {
         return languageRule;
     }
     doReport(codeReviewData) {
-        console.log(codeReviewData);
         this.workspace.showMessage("Openning report...");
-        this.workspace.openUrl("http://www.pinkbike.com/news/fail-of-the-month-june-2016.html");
+        let path = this.workspace.getExtensionPath('felipeKimio.codestyle');
+        let jsonData = JSON.stringify(codeReviewData);
+        Terminal_1.Terminal.command("open " + path + this.reportHtml, (err, data, stderr) => {
+            console.log(data);
+        });
     }
     getClangFormatFile() {
         let workspaceAdresss = this.workspace.verify();

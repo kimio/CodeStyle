@@ -23,6 +23,7 @@ export class Clang {
     private workspace = null;
     private fileConfig = null;
     private readonly clangFormatFile = "/.clang-format";
+    private readonly reportHtml = "/report";
 
     public constructor(workspace: Workspace) {
         this.workspace = workspace;
@@ -63,7 +64,7 @@ export class Clang {
                     conditionFunctionClassMoreThanLimit:languageRule.isConditionsInFunctionsMoreThanLimit()
                 });
             } else {
-                this.workspace.showError("Language not found :( - Please open the .clang-format and set Language ");
+                this.workspace.showError("Language not found :( - Please open the .clang-format and update Language value");
             }
         }
     }
@@ -75,8 +76,12 @@ export class Clang {
     }
 
     private doReport(codeReviewData:any): void {
-        console.log(codeReviewData);
         this.workspace.showMessage("Openning report...");
+        let path = this.workspace.getExtensionPath('felipeKimio.codestyle');
+        let jsonCodeReviewData = JSON.stringify(codeReviewData);
+        Terminal.command("open "+path+this.reportHtml, (err, data, stderr) => {
+             console.log(data);
+        });
     }
 
     private getClangFormatFile(): any {
