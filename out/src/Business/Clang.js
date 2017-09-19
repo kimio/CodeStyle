@@ -8,7 +8,8 @@ class Clang {
         this.workspace = null;
         this.fileConfig = null;
         this.clangFormatFile = "/.clang-format";
-        this.reportHtml = "/report";
+        this.reportHtml = "/report/dist/";
+        this.codeReviewData = "codeReviewData.json";
         this.workspace = workspace;
     }
     /**
@@ -47,7 +48,7 @@ class Clang {
                 });
             }
             else {
-                this.workspace.showError("Language not found :( - Please open the .clang-format and set Language ");
+                this.workspace.showError("Language not found :( - Please open the .clang-format and update Language value");
             }
         }
     }
@@ -59,10 +60,21 @@ class Clang {
     }
     doReport(codeReviewData) {
         this.workspace.showMessage("Openning report...");
-        let path = this.workspace.getExtensionPath('felipeKimio.codestyle');
-        let jsonData = JSON.stringify(codeReviewData);
-        Terminal_1.Terminal.command("open " + path + this.reportHtml, (err, data, stderr) => {
-            console.log(data);
+        var path = this.workspace.getExtensionPath('felipeKimio.codestyle') + this.reportHtml;
+        let jsonCodeReviewData = JSON.stringify(codeReviewData);
+        this.createReportFile(path + "assets/", jsonCodeReviewData, (error, data) => {
+            if (error) {
+                this.workspace.showError("Error on create report file - " + error.message);
+            }
+            else {
+                Terminal_1.Terminal.command("open " + path + "/index.html", (err, data, stderr) => {
+                });
+            }
+        });
+    }
+    createReportFile(currentPath, jsonData, Callback) {
+        fs.writeFile(currentPath + this.codeReviewData, jsonData, (err, data) => {
+            Callback(err, data);
         });
     }
     getClangFormatFile() {

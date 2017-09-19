@@ -23,7 +23,8 @@ export class Clang {
     private workspace = null;
     private fileConfig = null;
     private readonly clangFormatFile = "/.clang-format";
-    private readonly reportHtml = "/report";
+    private readonly reportHtml = "/report/dist/";
+    private readonly codeReviewData = "codeReviewData.json";
 
     public constructor(workspace: Workspace) {
         this.workspace = workspace;
@@ -77,11 +78,23 @@ export class Clang {
 
     private doReport(codeReviewData:any): void {
         this.workspace.showMessage("Openning report...");
-        let path = this.workspace.getExtensionPath('felipeKimio.codestyle');
+        var path = this.workspace.getExtensionPath('felipeKimio.codestyle')+this.reportHtml;
         let jsonCodeReviewData = JSON.stringify(codeReviewData);
-        Terminal.command("open "+path+this.reportHtml, (err, data, stderr) => {
-             console.log(data);
-        });
+
+          this.createReportFile(path+"assets/",jsonCodeReviewData,(error,data)=>{
+            if(error){
+                this.workspace.showError("Error on create report file - "+error.message);
+            }else{
+                Terminal.command("open "+path+"/index.html", (err, data, stderr) => {
+                });
+            }
+          });
+    }
+
+    private createReportFile(currentPath:string,jsonData:string,Callback){
+      fs.writeFile(currentPath+this.codeReviewData, jsonData, (err,data) => {
+        Callback(err,data);
+      });
     }
 
     private getClangFormatFile(): any {

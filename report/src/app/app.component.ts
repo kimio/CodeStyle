@@ -17,7 +17,7 @@ export class AppComponent {
 
   private getCodeReviewData() {
     console.log('ois');
-    return this.http.get('/app/codeReviewData.json').map((res: Response) => res.json())
+    return this.http.get('./assets/codeReviewData.json').map((res: Response) => res.json())
                   .subscribe(data => {
                         this.data = data;
                 });
