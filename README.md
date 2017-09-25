@@ -28,11 +28,18 @@ Code Review
 
 ## Requirements
 
-1 - Install Visual Studio Code \o\
+1 - MacOs
 
-2 - Check if you have code command on Mac [Microsoft Visual Code](https://code.visualstudio.com/docs/setup/mac)
+2 - Install Visual Studio Code \o\
+
+3 - Check if you have code command on Mac [Microsoft Visual Code](https://code.visualstudio.com/docs/setup/mac)
 - Launch VS Code.
 - Open the Command Palette (⇧⌘P) and type 'shell command' to find the Shell Command: Install 'code' command in PATH command.
 
+4 - Homebrew
+To Install homebrew on Mac:
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 -----------------------------------------------------------------------------------------------------------
