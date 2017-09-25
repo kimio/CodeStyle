@@ -1,8 +1,10 @@
-<div style="text-align:center">
-  <h1>
-    Report {{title}}!
-  </h1> 
-</div>
 <div class="card">
-    <h2>{{data.functionClassMoreThanLimit}}</h2>
+    <div *ngFor="let functionClassMoreThanLimit of data.functionClassMoreThanLimit">
+      {{functionClassMoreThanLimit.plusFunction}}
+    </div>
+    <img src="{{castle}}">
+    <img src="{{hero}}">
+    <img src="{{bug}}">
+    
+    
 </div>

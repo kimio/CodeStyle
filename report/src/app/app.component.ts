@@ -10,16 +10,37 @@ import 'rxjs/add/operator/map'
 export class AppComponent {
   title = ' - Code Review';
   data:any = {};
+  bug:string='';
+  castle:string='';
+  hero:string='';
 
   constructor(private http: Http) {
     this.getCodeReviewData();
   }
 
   private getCodeReviewData() {
-    console.log('ois');
     return this.http.get('./assets/codeReviewData.json').map((res: Response) => res.json())
                   .subscribe(data => {
                         this.data = data;
+                        this.getTemplate();
                 });
+  }
+
+  private getTemplate(){
+    
+  }
+  private getBug(){
+    if(this.data.template.bug){
+
+    }
+  }
+  private getHero(){
+    if(this.data.template.hero){
+
+    }
+  }
+  private getCastle(){
+    if(this.data.template.castle){
+    }
   }
 }

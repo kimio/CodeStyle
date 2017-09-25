@@ -2,6 +2,7 @@
 import { Terminal } from '../Helpers/Terminal';
 import { Workspace } from "../Helpers/Workspace";
 import { ObjC } from "./CodeReview/ObjC";
+import { CodeReviewReport } from "./CodeReview/CodeReviewReport";
 var fs = require('fs');
 interface Callback {
   (error: Error, result: object): void;
@@ -59,11 +60,12 @@ export class Clang {
                 languageRule = this.setupCodeReviewVars(languageRule,keyAndValueClanfFormat);
                 languageRule.stringContentFile = fs.readFileSync(this.workspace.getCurrentFile()).toString();
                 languageRule.findFunctionsInClass();
-                this.doReport({
+                var codeReviewReport = new CodeReviewReport({
                     functionLineMoreThanLimit:languageRule.isFunctioLinesMoreThanLimit(),
                     functionClassMoreThanLimit:languageRule.isFunctionClassMoreThanLimit(),
                     conditionFunctionClassMoreThanLimit:languageRule.isConditionsInFunctionsMoreThanLimit()
                 });
+                this.doReport(codeReviewReport.getTemplate());
             } else {
                 this.workspace.showError("Language not found :( - Please open the .clang-format and update Language value");
             }
@@ -79,16 +81,18 @@ export class Clang {
     private doReport(codeReviewData:any): void {
         this.workspace.showMessage("Openning report...");
         var path = this.workspace.getExtensionPath('felipeKimio.codestyle')+this.reportHtml;
+        var assetsPath = path+"assets/";
         let jsonCodeReviewData = JSON.stringify(codeReviewData);
 
-          this.createReportFile(path+"assets/",jsonCodeReviewData,(error,data)=>{
+        Terminal.command("mkdir -p "+assetsPath, (err, data, stderr) => {
+          this.createReportFile(assetsPath,jsonCodeReviewData,(error,data)=>{
             if(error){
                 this.workspace.showError("Error on create report file - "+error.message);
             }else{
-                Terminal.command("open "+path+"/index.html", (err, data, stderr) => {
-                });
+                Terminal.command("open "+path+"/index.html",(err, data, stderr) => {});
             }
           });
+        });
     }
 
     private createReportFile(currentPath:string,jsonData:string,Callback){

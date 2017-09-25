@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Terminal_1 = require("../Helpers/Terminal");
 const ObjC_1 = require("./CodeReview/ObjC");
+const CodeReviewReport_1 = require("./CodeReview/CodeReviewReport");
 var fs = require('fs');
 class Clang {
     constructor(workspace) {
@@ -41,11 +42,12 @@ class Clang {
                 languageRule = this.setupCodeReviewVars(languageRule, keyAndValueClanfFormat);
                 languageRule.stringContentFile = fs.readFileSync(this.workspace.getCurrentFile()).toString();
                 languageRule.findFunctionsInClass();
-                this.doReport({
+                var codeReviewReport = new CodeReviewReport_1.CodeReviewReport({
                     functionLineMoreThanLimit: languageRule.isFunctioLinesMoreThanLimit(),
                     functionClassMoreThanLimit: languageRule.isFunctionClassMoreThanLimit(),
                     conditionFunctionClassMoreThanLimit: languageRule.isConditionsInFunctionsMoreThanLimit()
                 });
+                this.doReport(codeReviewReport.getTemplate());
             }
             else {
                 this.workspace.showError("Language not found :( - Please open the .clang-format and update Language value");
@@ -61,15 +63,17 @@ class Clang {
     doReport(codeReviewData) {
         this.workspace.showMessage("Openning report...");
         var path = this.workspace.getExtensionPath('felipeKimio.codestyle') + this.reportHtml;
+        var assetsPath = path + "assets/";
         let jsonCodeReviewData = JSON.stringify(codeReviewData);
-        this.createReportFile(path + "assets/", jsonCodeReviewData, (error, data) => {
-            if (error) {
-                this.workspace.showError("Error on create report file - " + error.message);
-            }
-            else {
-                Terminal_1.Terminal.command("open " + path + "/index.html", (err, data, stderr) => {
-                });
-            }
+        Terminal_1.Terminal.command("mkdir -p " + assetsPath, (err, data, stderr) => {
+            this.createReportFile(assetsPath, jsonCodeReviewData, (error, data) => {
+                if (error) {
+                    this.workspace.showError("Error on create report file - " + error.message);
+                }
+                else {
+                    Terminal_1.Terminal.command("open " + path + "/index.html", (err, data, stderr) => { });
+                }
+            });
         });
     }
     createReportFile(currentPath, jsonData, Callback) {
