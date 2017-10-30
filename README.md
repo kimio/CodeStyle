@@ -42,4 +42,28 @@ To Install homebrew on Mac:
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
+## How to debug the code?
+
+1 - Clone the project
+```
+git clone https://github.com/kimio/CodeStyle.git
+```
+
+2 - Access the folder project
+```
+cd CodeStyle/
+```
+
+3 - Install the dependencies
+```
+npm install
+```
+
+4 - Open the folder project using visual code
+```
+code .
+```
+
+5 - Let's debug the project, press F5 \o/
+
 -----------------------------------------------------------------------------------------------------------
