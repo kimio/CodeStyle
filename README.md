@@ -66,7 +66,7 @@ code .
 
 5 - Let's debug the project, press F5 \o/
 
-## How to use
+## How to use?
 
 Follow the debug steps above
 
