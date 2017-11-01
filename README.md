@@ -73,7 +73,7 @@ Follow the debug steps above
 ### Config Clang format 
 1 - Press (⇧⌘P), write Code Style: and select Config
 
-2 - Open the clang format file and update the language value, for example:
+2 - Open the clang format file ".clang-format" and update the language value, for example:
 
 Language:        ObjC
 
