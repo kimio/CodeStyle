@@ -21,39 +21,39 @@ class CodeReviewReport {
                 hero: false,
                 bug: false
             }, 3: {
-                castle: CodeReviewReport.setPositionTypeSize(-90, "default", 80),
-                hero: CodeReviewReport.setPositionTypeSize(-90, "walk", 0),
+                castle: CodeReviewReport.setPositionTypeSize(90, "default", 80),
+                hero: CodeReviewReport.setPositionTypeSize(90, "walk", 0),
                 bug: false
             }, 6: {
-                castle: CodeReviewReport.setPositionTypeSize(-90, "default", 80),
-                hero: CodeReviewReport.setPositionTypeSize(-80, "hit", 0),
-                bug: CodeReviewReport.setPositionTypeSize(-80, "random", 0)
+                castle: false,
+                hero: CodeReviewReport.setPositionTypeSize(80, "hit", 0),
+                bug: CodeReviewReport.setPositionTypeSize(80, "default", 0)
             }, 10: {
                 castle: false,
-                hero: CodeReviewReport.setPositionTypeSize(-70, "hit", 0),
-                bug: CodeReviewReport.setPositionTypeSize(-70, "default", 0)
+                hero: CodeReviewReport.setPositionTypeSize(70, "hit", 0),
+                bug: CodeReviewReport.setPositionTypeSize(0, "default", 0)
             }, 30: {
                 castle: false,
-                hero: CodeReviewReport.setPositionTypeSize(-60, "walk", 0),
-                bug: CodeReviewReport.setPositionTypeSize(-70, "default", 0)
+                hero: CodeReviewReport.setPositionTypeSize(60, "walk", 0),
+                bug: CodeReviewReport.setPositionTypeSize(70, "default", 0)
             }, 50: {
                 castle: false,
-                hero: CodeReviewReport.setPositionTypeSize(-40, "stand", 0),
+                hero: CodeReviewReport.setPositionTypeSize(40, "stand", 0),
                 bug: false
             }, 80: {
                 castle: false,
-                hero: CodeReviewReport.setPositionTypeSize(-40, "hit", 0),
-                bug: CodeReviewReport.setPositionTypeSize(-40, "default", 0)
+                hero: CodeReviewReport.setPositionTypeSize(40, "hit", 0),
+                bug: CodeReviewReport.setPositionTypeSize(0, "default", 0)
             }, 100: {
                 castle: false,
-                hero: CodeReviewReport.setPositionTypeSize(-40, "walk", 0),
-                bug: CodeReviewReport.setPositionTypeSize(-60, "default", 0)
+                hero: CodeReviewReport.setPositionTypeSize(40, "walk", 0),
+                bug: CodeReviewReport.setPositionTypeSize(60, "default", 0)
             }, 200: {
                 castle: false,
-                hero: CodeReviewReport.setPositionTypeSize(-30, "walk", 0),
+                hero: CodeReviewReport.setPositionTypeSize(30, "walk", 0),
                 bug: false
             }, 300: {
-                castle: CodeReviewReport.setPositionTypeSize(-100, "default", 20),
+                castle: false,
                 hero: CodeReviewReport.setPositionTypeSize(0, "stand", 0),
                 bug: false
             },

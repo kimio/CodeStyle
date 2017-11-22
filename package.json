@@ -13,7 +13,7 @@
     "activationEvents": [
         "onCommand:extension.config",
         "onCommand:extension.format",
-        "onCommand:extension.code_review_objc"
+        "onCommand:extension.code_review"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -27,8 +27,8 @@
                 "title": "Code Style: Format Current File"
             },
             {
-                "command": "extension.code_review_objc",
-                "title": "Code Style: Code Review Objective-c"
+                "command": "extension.code_review",
+                "title": "Code Style: Code Review"
             }
         ]
     },
@@ -44,7 +44,9 @@
         "vscode": "^1.1.5",
         "mocha": "^3.5.0",
         "@types/node": "^8.0.26",
-        "@types/mocha": "^2.2.42"
+        "@types/mocha": "^2.2.42",
+        "fs": "0.0.1-security",
+        "node-cmd": "^3.0.0"
     },
     "dependencies": {
         "fs": "0.0.1-security",

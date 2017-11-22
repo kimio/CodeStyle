@@ -1,10 +1,46 @@
-<div class="card">
-    <div *ngFor="let functionClassMoreThanLimit of data.functionClassMoreThanLimit">
+<div class="report">
+    <!-- <div *ngFor="let functionClassMoreThanLimit of data.functionClassMoreThanLimit">
       {{functionClassMoreThanLimit.plusFunction}}
+    </div> -->
+    <div #backgroundElement>
+      <img src="{{hero}}" #heroElement>
+      <img src="{{bug}}" #bugElement>
+      <img src="{{castle}}" #castleElement>
     </div>
-    <img src="{{castle}}">
-    <img src="{{hero}}">
-    <img src="{{bug}}">
-    
-    
+    <ul>
+      <div class="reportCategory">
+        Complexibility
+      </div>
+      <div style="display: none">
+          <li *ngFor="let conditionFunctionClassMoreThanLimit of data.conditionFunctionClassMoreThanLimit">
+              <div class="itemTitleReport">{{conditionFunctionClassMoreThanLimit.functionName}}</div>
+              <pre lang="{{conditionFunctionClassMoreThanLimit.initialLine}}"><code class="language-objectivec line-numbers">
+                  {{conditionFunctionClassMoreThanLimit.content}}
+                  </code></pre>
+            </li>
+      </div>
+    </ul>
+    <ul>
+      <div class="reportCategory">
+        Functions in Class
+      </div>
+      <div style="display: none">
+          <li *ngFor="let functionClassMoreThanLimit of data.functionClassMoreThanLimit">
+              <div class="itemTitleReport">{{functionClassMoreThanLimit.class}} - {{functionClassMoreThanLimit.plusFunction}}</div>
+            </li>
+      </div>
+    </ul>
+    <ul>
+      <div class="reportCategory">
+        Lines in Functions
+      </div>
+      <div style="display: none">
+          <li *ngFor="let functionLineMoreThanLimit of data.functionLineMoreThanLimit">
+              <div class="itemTitleReport">{{functionLineMoreThanLimit.class}} - {{functionLineMoreThanLimit.plusLine}} - {{functionLineMoreThanLimit.functionName}}</div>
+              <pre lang="{{functionLineMoreThanLimit.initialLine}}"><code class="language-objectivec line-numbers">
+                  {{functionLineMoreThanLimit.content}}
+                  </code></pre>
+            </li>
+      </div>
+    </ul>
 </div>

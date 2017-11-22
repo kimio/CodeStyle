@@ -11,6 +11,9 @@ class Clang {
         this.clangFormatFile = "/.clang-format";
         this.reportHtml = "/report/dist/";
         this.codeReviewData = "codeReviewData.json";
+        this.assets = "assets/";
+        this.dist = "/dist/";
+        this.src = "/src/";
         this.workspace = workspace;
     }
     /**
@@ -63,16 +66,18 @@ class Clang {
     doReport(codeReviewData) {
         this.workspace.showMessage("Openning report...");
         var path = this.workspace.getExtensionPath('felipeKimio.codestyle') + this.reportHtml;
-        var assetsPath = path + "assets/";
+        var assetsPath = path + this.assets;
         let jsonCodeReviewData = JSON.stringify(codeReviewData);
         Terminal_1.Terminal.command("mkdir -p " + assetsPath, (err, data, stderr) => {
-            this.createReportFile(assetsPath, jsonCodeReviewData, (error, data) => {
-                if (error) {
-                    this.workspace.showError("Error on create report file - " + error.message);
-                }
-                else {
-                    Terminal_1.Terminal.command("open " + path + "/index.html", (err, data, stderr) => { });
-                }
+            this.createReportFile(assetsPath.replace(this.dist, this.src), jsonCodeReviewData, (error, data) => {
+                this.createReportFile(assetsPath, jsonCodeReviewData, (error, data) => {
+                    if (error) {
+                        this.workspace.showError("Error on create report file - " + error.message);
+                    }
+                    else {
+                        Terminal_1.Terminal.command("open " + path + "/index.html", (err, data, stderr) => { });
+                    }
+                });
             });
         });
     }

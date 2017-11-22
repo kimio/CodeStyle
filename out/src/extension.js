@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
 const Workspace_1 = require("./Helpers/Workspace");
 const Clang_1 = require("./Business/Clang");
+const Terminal_1 = require("./Helpers/Terminal");
 function activate(context) {
     let workspace = new Workspace_1.Workspace(vscode);
     let workspaceAdresss = workspace.verify();
@@ -11,7 +12,14 @@ function activate(context) {
             var clang = new Clang_1.Clang(workspace);
             clang.newConfig(workspaceAdresss, function (error, result) {
                 if (!error) {
-                    workspace.showMessage("Created new configuration " + result);
+                    Terminal_1.Terminal.command("code " + result, (err, data, stderr) => {
+                        if (err) {
+                            workspace.showError("Error on created new configuration :(");
+                        }
+                        else {
+                            workspace.showMessage("Created new configuration " + result);
+                        }
+                    });
                 }
             });
         }
@@ -31,7 +39,7 @@ function activate(context) {
         }
     });
     context.subscriptions.push(disposable);
-    disposable = vscode.commands.registerCommand('extension.code_review_objc', () => {
+    disposable = vscode.commands.registerCommand('extension.code_review', () => {
         if (workspaceAdresss) {
             var clang = new Clang_1.Clang(workspace);
             clang.codeReview();

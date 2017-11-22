@@ -19,6 +19,7 @@ export interface ClangLanguageRules {
     isConditionsInFunctionsMoreThanLimit(): any;
     isFunctioLinesMoreThanLimit(): any;
     isFunctionClassMoreThanLimit(): any;
+
 }
 export class Clang {
     private workspace = null;
@@ -26,6 +27,9 @@ export class Clang {
     private readonly clangFormatFile = "/.clang-format";
     private readonly reportHtml = "/report/dist/";
     private readonly codeReviewData = "codeReviewData.json";
+    private readonly assets = "assets/";
+    private readonly dist = "/dist/";
+    private readonly src = "/src/"
 
     public constructor(workspace: Workspace) {
         this.workspace = workspace;
@@ -43,7 +47,7 @@ export class Clang {
             });
         });
     }
-
+    private getLimitChar
     /**
      * Code Review based on clang format file
      */
@@ -81,17 +85,19 @@ export class Clang {
     private doReport(codeReviewData:any): void {
         this.workspace.showMessage("Openning report...");
         var path = this.workspace.getExtensionPath('felipeKimio.codestyle')+this.reportHtml;
-        var assetsPath = path+"assets/";
+        var assetsPath = path+this.assets;
         let jsonCodeReviewData = JSON.stringify(codeReviewData);
 
         Terminal.command("mkdir -p "+assetsPath, (err, data, stderr) => {
-          this.createReportFile(assetsPath,jsonCodeReviewData,(error,data)=>{
-            if(error){
-                this.workspace.showError("Error on create report file - "+error.message);
-            }else{
-                Terminal.command("open "+path+"/index.html",(err, data, stderr) => {});
-            }
-          });
+            this.createReportFile(assetsPath.replace(this.dist,this.src),jsonCodeReviewData,(error,data)=> {
+                this.createReportFile(assetsPath,jsonCodeReviewData,(error,data)=> {
+                    if(error) {
+                        this.workspace.showError("Error on create report file - "+error.message);
+                    }else{
+                        Terminal.command("open "+path+"/index.html",(err, data, stderr) => {});
+                    }
+                });
+            });
         });
     }
 

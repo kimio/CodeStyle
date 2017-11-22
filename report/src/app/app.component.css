@@ -1,0 +1,34 @@
+.report{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #292b2e;
+}
+body,html{
+    background-color: #292b2e;
+}
+ul{
+    margin-bottom: 30px;
+    padding-right: 50px;
+}
+pre{
+    margin: auto;
+}
+li{
+    list-style-type: none;
+}
+.itemTitleReport{
+    background-color: #191b14;
+    color: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}
+.reportCategory{
+    cursor: pointer;
+    background-color: #191b1473;
+    color: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}

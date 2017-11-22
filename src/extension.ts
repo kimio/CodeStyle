@@ -1,7 +1,8 @@
 'use strict';
 import * as vscode from 'vscode';
 import {Workspace} from './Helpers/Workspace';
-import { Clang } from "./Business/Clang";
+import { Clang,ClangLanguageRules } from "./Business/Clang";
+import { Terminal } from './Helpers/Terminal';
 export function activate(context: vscode.ExtensionContext) {
     let workspace = new Workspace(vscode);
     let workspaceAdresss = workspace.verify();
@@ -10,7 +11,13 @@ export function activate(context: vscode.ExtensionContext) {
             var clang = new Clang(workspace);
             clang.newConfig(workspaceAdresss,function(error,result){
                 if(!error){
-                    workspace.showMessage("Created new configuration "+result);
+                    Terminal.command("code "+result,(err, data, stderr) => {
+                        if (err) {
+                            workspace.showError("Error on created new configuration :(");
+                        } else {
+                            workspace.showMessage("Created new configuration "+result);
+                        }
+                    })
                 }
             });   
         }
@@ -29,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
     context.subscriptions.push(disposable);
-    disposable = vscode.commands.registerCommand('extension.code_review_objc', () => {
+    disposable = vscode.commands.registerCommand('extension.code_review', () => {
         if(workspaceAdresss){
             var clang = new Clang(workspace);
             clang.codeReview();

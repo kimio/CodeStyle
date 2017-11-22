@@ -9,20 +9,119 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 require("rxjs/add/operator/map");
 let AppComponent = class AppComponent {
-    constructor(http) {
+    constructor(http, renderer) {
         this.http = http;
+        this.numberBugThatCanFly = [3];
         this.title = ' - Code Review';
         this.data = {};
+        this.bug = '';
+        this.castle = '';
+        this.hero = '';
+        this.bug_width = '';
+        this.renderer = null;
+        this.renderer = renderer;
         this.getCodeReviewData();
     }
     getCodeReviewData() {
-        console.log('ois');
-        return this.http.get('./assets/codeReviewData.json').map((res) => res.json())
+        let codeReviewData = this.http.get('./assets/codeReviewData.json').map((res) => res.json())
             .subscribe(data => {
             this.data = data;
+            this.getTemplate();
+            this.getBug();
+            this.getHero();
+            this.getCastle();
+            this.setActionCategory();
+        });
+        window.setTimeout(Prism.highlightAll, 9);
+        return codeReviewData;
+    }
+    getTemplate() {
+        this.setBackground();
+    }
+    getBug() {
+        if (this.data.template.bug) {
+            let bugNumber = Math.floor(Math.random() * 5);
+            this.bug = './assets/bug_' + bugNumber + '.gif';
+            this.setBugStyle(bugNumber);
+        }
+    }
+    getHero() {
+        if (this.data.template.hero) {
+            this.hero = './assets/hero_' + this.data.template.hero.type + '.gif';
+            this.heroElement.nativeElement.style.marginLeft = this.data.template.hero.position + "px";
+        }
+    }
+    getCastle() {
+        if (this.data.template.castle) {
+            this.castle = './assets/castle.png';
+            this.setCastle();
+        }
+    }
+    setActionCategory() {
+        this.renderer.listen('document', 'click', (evt) => {
+            if (evt.target.className == "reportCategory") {
+                let display = evt.target.parentNode.children[1].style.display;
+                evt.target.parentNode.children[1].style.display = (display == 'none') ? '' : 'none';
+                var items = evt.target.parentNode.children[1].children;
+                for (var i = 0; i < items.length; i++) {
+                    items[i].children[1].dataset.start = parseInt(items[i].children[1].lang);
+                }
+            }
+            window.setTimeout(Prism.highlightAll, 9);
         });
     }
+    //Style Setting
+    /**
+     * Background
+     */
+    setBackground() {
+        var style = this.backgroundElement.nativeElement.style;
+        style.textAlign = "center";
+        style.minWidth = "600px";
+        style.backgroundImage = "url('./assets/background.gif')";
+        style.textAlign = "center";
+        style.minWidth = "600px";
+        style.backgroundColor = "white";
+        style.backgroundPositionX = "center";
+        style.backgroundSize = "cover";
+        style.height = "200px";
+        style.paddingTop = "250px";
+        style.backgroundPositionY = "bottom";
+        style.paddingBottom = "20px";
+        style.marginBottom = "50px";
+    }
+    /**
+     * Bug Style position
+     * @param bugNumber bug number
+     */
+    setBugStyle(bugNumber) {
+        this.bugElement.nativeElement.height = 150;
+        if (this.numberBugThatCanFly.indexOf(bugNumber) != -1) {
+            this.bugElement.nativeElement.style.marginBottom = "60px";
+            this.bugElement.nativeElement.height = 100;
+        }
+        this.bugElement.nativeElement.style.marginLeft = this.data.template.bug.position + "px";
+    }
+    /**
+     * Castle
+     */
+    setCastle() {
+        this.castleElement.nativeElement.height = 320;
+        this.castleElement.nativeElement.style.marginLeft = this.data.template.castle.position + "px";
+    }
 };
+__decorate([
+    core_1.ViewChild('bugElement')
+], AppComponent.prototype, "bugElement", void 0);
+__decorate([
+    core_1.ViewChild('castleElement')
+], AppComponent.prototype, "castleElement", void 0);
+__decorate([
+    core_1.ViewChild('heroElement')
+], AppComponent.prototype, "heroElement", void 0);
+__decorate([
+    core_1.ViewChild('backgroundElement')
+], AppComponent.prototype, "backgroundElement", void 0);
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app-root',
