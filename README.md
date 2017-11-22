@@ -42,4 +42,39 @@ To Install homebrew on Mac:
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
+## How to debug the code?
+
+1 - Clone the project
+```
+git clone https://github.com/kimio/CodeStyle.git
+```
+
+2 - Access the folder project
+```
+cd CodeStyle/
+```
+
+3 - Install the dependencies
+```
+npm install
+```
+
+4 - Open the folder project using visual code
+```
+code .
+```
+
+5 - Let's debug the project, press F5 \o/
+
+## How to use?
+
+Follow the debug steps above
+
+### Config Clang format 
+1 - Press (⇧⌘P), write Code Style: and select Config
+
+2 - Open the clang format file ".clang-format" and update the language value, for example:
+
+Language:        ObjC
+
 -----------------------------------------------------------------------------------------------------------
