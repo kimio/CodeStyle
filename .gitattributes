@@ -1,1 +1,1 @@
-*.rb linguist-language=Typescript
+*.css linguist-vendored=false
