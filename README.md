@@ -42,10 +42,16 @@ To Install homebrew on Mac:
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
+5 - NodeJs
+```
+brew install node
+```
+
 ## How to debug the code?
 
 1 - Clone the project
 ```
+cd ~
 git clone https://github.com/kimio/CodeStyle.git
 ```
 
@@ -57,24 +63,59 @@ cd CodeStyle/
 3 - Install the dependencies
 ```
 npm install
+cd report
+npm install
 ```
 
 4 - Open the folder project using visual code
 ```
+cd ..
 code .
 ```
 
-5 - Let's debug the project, press F5 \o/
+5 - Let's debug the project, press F5 \o/, possibile errors that may ocurr like thie message
+![erroronrunningdebug](https://user-images.githubusercontent.com/4916789/33186757-44651f96-d073-11e7-808e-7b45337b2aff.png)
+Click on Debug Anyway :)
 
 ## How to use?
 
 Follow the debug steps above
 
 ### Config Clang format 
-1 - Press (⇧⌘P), write Code Style: and select Config
-
+1 - Press (⇧⌘P), write Code Style: and select "Code Style: Config"
 2 - Open the clang format file ".clang-format" and update the language value, for example:
 
 Language:        ObjC
 
 -----------------------------------------------------------------------------------------------------------
+
+### Format Current File
+1 - Open the file that you needs to format
+2 - Press (⇧⌘P), write Code Style: and select "Code Style: Format Current File"
+
+-----------------------------------------------------------------------------------------------------------
+
+### Code Review
+#### Debug mode
+1 - Open the file that you needs to format
+2 - Press (⇧⌘P), write Code Style: and select "Code Style: Code Review"
+3 - You will see the report, possibile errors that may ocurr like:
+  - Doesn't open anything :(
+  Probally you don't install the angular cli, run this script on terminal
+  ```npm install -g @angular/cli```
+  and try again :)
+
+#### Only running 
+1 - Open the file that you needs to format
+2 - Press (⇧⌘P), write Code Style: and select "Code Style: Code Review"
+4 - Open the report file
+```
+cd ~
+open CodeStyle/report/dist/index.html
+```
+5 - You will see the report, possibile errors that may ocurr like:
+  - Google Chrome open, but without any information :(
+  - Close All Google Chrome instance and run this script on Terminal 
+  ``` - open -a "Google Chrome" --args --allow-file-access-from-files 
+  cd ~
+  open CodeStyle/report/dist/index.html```
