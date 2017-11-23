@@ -102,9 +102,9 @@ Language:        ObjC
 3 - You will see the report, possibile errors that may ocurr like:
   - Doesn't open anything :(
   Probally you don't install the angular cli, run this script on terminal
-  ```
+```
   npm install -g @angular/cli
-  ```
+```
   and try again :)
 
 #### Only running 
