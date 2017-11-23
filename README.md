@@ -73,7 +73,7 @@ cd ..
 code .
 ```
 
-5 - Let's debug the project, press F5 \o/, possibile errors that may ocurr like thie message
+5 - Let's debug the project, press F5 \o/, possibile errors that may ocurr like this message
 ![erroronrunningdebug](https://user-images.githubusercontent.com/4916789/33186757-44651f96-d073-11e7-808e-7b45337b2aff.png)
 Click on Debug Anyway :)
 
@@ -116,8 +116,14 @@ cd ~
 open CodeStyle/report/dist/index.html
 ```
 5 - You will see the report, possibile errors that may ocurr like:
-  - Google Chrome open, but without any information :(
+  5.1 Google Chrome open, but without any information :(
   - Close All Google Chrome instance and run this script on Terminal 
   ``` - open -a "Google Chrome" --args --allow-file-access-from-files 
   cd ~
-  open CodeStyle/report/dist/index.html```
+  open CodeStyle/report/dist/index.html
+  ```
+  5.2 Safari open, but without any information :(
+  - Close All Safari instance and set this config on Safari
+  ![corserrorsafari](https://user-images.githubusercontent.com/4916789/33188005-5209cc78-d07d-11e7-8aa1-da1072d0c387.png)
+
+  
