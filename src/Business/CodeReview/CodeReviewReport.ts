@@ -20,8 +20,8 @@ export class CodeReviewReport {
                 hero:false,
                 bug:false
             },3:{
-                castle:CodeReviewReport.setPositionTypeSize(90,"default",80),
-                hero:CodeReviewReport.setPositionTypeSize(90,"walk",0),
+                castle:CodeReviewReport.setPositionTypeSize(0,"default",80),
+                hero:CodeReviewReport.setPositionTypeSize(450,"walk",0),
                 bug:false
             },6:{
                 castle:false,

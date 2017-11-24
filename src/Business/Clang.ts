@@ -7,6 +7,7 @@ var fs = require('fs');
 interface Callback {
   (error: Error, result: object): void;
 }
+
 export interface ClangLanguageRules {
     stringContentFile: string;
     functionsInClass: any;
@@ -14,13 +15,12 @@ export interface ClangLanguageRules {
     maxFunctionInClass: number;
     maxConditionsInFunctions: number;
 
-    findFunctionsInClass(): void;
     whereIsTheClassOfFunction(functionContent: string): string;
     isConditionsInFunctionsMoreThanLimit(): any;
     isFunctioLinesMoreThanLimit(): any;
     isFunctionClassMoreThanLimit(): any;
-
 }
+
 export class Clang {
     private workspace = null;
     private fileConfig = null;

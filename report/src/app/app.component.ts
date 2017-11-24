@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http'
 import 'rxjs/add/operator/map'
 
 declare var Prism: any;
+declare var Konami: any;
 
 @Component({
   selector: 'app-root',
@@ -43,9 +44,10 @@ export class AppComponent {
       window.setTimeout(Prism.highlightAll, 9);
       return codeReviewData;
   }
-
+ 
   private getTemplate(){
     this.setBackground();
+    Konami(function() { window.location.href='http://goo.gl/9HBmWc';});
   }
   private getBug(){
     if(this.data.template.bug) {
@@ -57,12 +59,12 @@ export class AppComponent {
   private getHero(){
     if(this.data.template.hero) {
       this.hero = './assets/hero_'+ this.data.template.hero.type +'.gif';
-      this.heroElement.nativeElement.style.marginLeft = this.data.template.hero.position+"px";
+      this.heroElement.nativeElement.style.marginRight = this.data.template.hero.position+"px";
     }
   }
   private getCastle(){
     if(this.data.template.castle) {
-      this.castle = './assets/castle.png';
+      this.castle = './assets/castle.gif';
       this.setCastle();
     }
   }
@@ -74,7 +76,9 @@ export class AppComponent {
         evt.target.parentNode.children[1].style.display = (display=='none')?'':'none';
         var items = evt.target.parentNode.children[1].children;
         for(var i=0;i<items.length;i++){
-          items[i].children[1].dataset.start=parseInt(items[i].children[1].lang);
+          if(items[i].children[1]){
+            items[i].children[1].dataset.start=parseInt(items[i].children[1].lang);
+          }
         }
       }
       window.setTimeout(Prism.highlightAll, 9);

@@ -3,12 +3,14 @@
       {{functionClassMoreThanLimit.plusFunction}}
     </div> -->
     <div #backgroundElement>
-      <img src="{{hero}}" #heroElement>
-      <img src="{{bug}}" #bugElement>
-      <img src="{{castle}}" #castleElement>
+        <div class="heroAndBug">
+          <img src="{{hero}}" #heroElement>
+          <img src="{{bug}}" #bugElement>
+        </div>
+        <div class="castle"><img src="{{castle}}" #castleElement></div>
     </div>
     <ul>
-      <div class="reportCategory">
+      <div class="reportCategory" *ngIf="data.conditionFunctionClassMoreThanLimit[0]">
         Complexibility
       </div>
       <div style="display: none">
@@ -21,22 +23,25 @@
       </div>
     </ul>
     <ul>
-      <div class="reportCategory">
+      <div class="reportCategory" *ngIf="data.functionClassMoreThanLimit[0]">
         Functions in Class
       </div>
       <div style="display: none">
           <li *ngFor="let functionClassMoreThanLimit of data.functionClassMoreThanLimit">
-              <div class="itemTitleReport">{{functionClassMoreThanLimit.class}} - {{functionClassMoreThanLimit.plusFunction}}</div>
+              <div class="itemTitleReport">{{functionClassMoreThanLimit.class}} 
+                <h1>remove {{functionClassMoreThanLimit.plusFunction}} function(s)</h1></div>
             </li>
       </div>
     </ul>
-    <ul>
-      <div class="reportCategory">
+    <ul> 
+      <div class="reportCategory" *ngIf="data.functionLineMoreThanLimit[0]">
         Lines in Functions
       </div>
       <div style="display: none">
           <li *ngFor="let functionLineMoreThanLimit of data.functionLineMoreThanLimit">
-              <div class="itemTitleReport">{{functionLineMoreThanLimit.class}} - {{functionLineMoreThanLimit.plusLine}} - {{functionLineMoreThanLimit.functionName}}</div>
+              <div class="itemTitleReport">{{functionLineMoreThanLimit.class}}
+                <h1>remove {{functionLineMoreThanLimit.plusLine}} line(s)</h1>
+                <h2>{{functionLineMoreThanLimit.functionName}}</h2></div>
               <pre lang="{{functionLineMoreThanLimit.initialLine}}"><code class="language-objectivec line-numbers">
                   {{functionLineMoreThanLimit.content}}
                   </code></pre>

@@ -19,6 +19,14 @@ pre{
 li{
     list-style-type: none;
 }
+h1{
+    font-size: 13px;
+    font-weight: lighter;
+}
+h2{
+    font-size: 15px;
+    font-weight: lighter;
+}
 .itemTitleReport{
     background-color: #191b14;
     color: #fff;
@@ -31,4 +39,18 @@ li{
     color: #fff;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
+}
+.castle{
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 136px;
+}
+.heroAndBug, img{
+    z-index: 2;
+}
+.castle img{
+    z-index: 1;
+    height: 350px;
 }

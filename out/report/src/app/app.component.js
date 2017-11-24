@@ -37,6 +37,7 @@ let AppComponent = class AppComponent {
     }
     getTemplate() {
         this.setBackground();
+        Konami(function () { window.location.href = 'http://goo.gl/9HBmWc'; });
     }
     getBug() {
         if (this.data.template.bug) {
@@ -48,12 +49,12 @@ let AppComponent = class AppComponent {
     getHero() {
         if (this.data.template.hero) {
             this.hero = './assets/hero_' + this.data.template.hero.type + '.gif';
-            this.heroElement.nativeElement.style.marginLeft = this.data.template.hero.position + "px";
+            this.heroElement.nativeElement.style.marginRight = this.data.template.hero.position + "px";
         }
     }
     getCastle() {
         if (this.data.template.castle) {
-            this.castle = './assets/castle.png';
+            this.castle = './assets/castle.gif';
             this.setCastle();
         }
     }
@@ -64,7 +65,9 @@ let AppComponent = class AppComponent {
                 evt.target.parentNode.children[1].style.display = (display == 'none') ? '' : 'none';
                 var items = evt.target.parentNode.children[1].children;
                 for (var i = 0; i < items.length; i++) {
-                    items[i].children[1].dataset.start = parseInt(items[i].children[1].lang);
+                    if (items[i].children[1]) {
+                        items[i].children[1].dataset.start = parseInt(items[i].children[1].lang);
+                    }
                 }
             }
             window.setTimeout(Prism.highlightAll, 9);
