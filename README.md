@@ -42,9 +42,10 @@ To Install homebrew on Mac:
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-5 - NodeJs
+5 - NodeJs And Clang format
 ```
 brew install node
+brew install clang-format
 ```
 
 ## How to debug the code?
